@@ -21,10 +21,4 @@ class Conference extends Model
         'created_at',
         'updated_at',
     ];
-
-    // ALTERNATYVA Laravel 9+ / 10+ / 11+ / 12 versijose – naudok $casts
-    // protected $casts = [
-    //     'date' => 'date',     // arba 'datetime:Y-m-d' jei nori specifinį formatą
-    //     'time' => 'datetime:H:i',
-    // ];
 }
