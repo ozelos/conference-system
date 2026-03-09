@@ -29,7 +29,7 @@
                         <tr>
                             <td>{{ $conference->title }}</td>
                             <td>
-                                {{ $conference->date->format('Y-m-d') }}<br>
+                                {{ \Carbon\Carbon::parse($conference->date)->format('Y-m-d') }}<br>
                                 <small>{{ $conference->time }}</small>
                             </td>
                             <td>{{ $conference->location }}</td>
