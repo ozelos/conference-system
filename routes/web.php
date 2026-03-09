@@ -10,11 +10,6 @@ use App\Http\Controllers\HomeController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Pagrindinis puslapis (visiems matomas)
-Route::get('/', function () {
-    return view('welcome'); // arba 'home' su studento info
-})->name('home');
-
 // Kliento posistemis
 Route::prefix('client')->name('client.')->group(function () {
     Route::get('/conferences', [ClientController::class, 'index'])->name('conferences.index');
