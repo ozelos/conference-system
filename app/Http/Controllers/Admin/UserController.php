@@ -3,25 +3,43 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
-    public function update(UpdateUserRequest $request, User $user)
+    /**
+     * Rodo visų naudotojų sąrašą administratoriui
+     */
+    public function index(): View
     {
-        $data = $request->validated();
+        $users = User::all();  // arba ::orderBy('name')->get();
 
-        // Jei slaptažodis nepakeistas – išmetame jį
-        if (empty($data['password'])) {
-            unset($data['password']);
-        } else {
-            $data['password'] = bcrypt($data['password']);
-        }
+        return view('admin.users.index', compact('users'));
+    }
 
-        $user->update($data);
+    /**
+     * Rodo naudotojo redagavimo formą
+     */
+    public function edit(User $user): View
+    {
+        return view('admin.users.edit', compact('user'));
+    }
 
-        return redirect()
-            ->route('admin.users.index')
-            ->with('success', 'Naudotojo duomenys atnaujinti sėkmingai.');
+    /**
+     * Atnaujina naudotojo duomenis
+     */
+    public function update(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'role' => 'required|in:client,employee,admin',
+            // jei nori leisti keisti email ar slaptažodį – pridėk taisykles
+        ]);
+
+        $user->update($validated);
+
+        return redirect()->route('admin.users.index')
+            ->with('success', 'Naudotojas atnaujintas');
     }
 }
