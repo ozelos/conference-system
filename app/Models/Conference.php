@@ -9,22 +9,22 @@ class Conference extends Model
 {
     use HasFactory;
 
-    /**
-     * Laukai, kuriuos leidžiama masiškai priskirti (mass assignment)
-     */
     protected $fillable = [
-        'title',
-        'description',
-        'lecturers',
-        'date',
-        'time',
-        'location',
-        'is_past',  // jei naudoji šį lauką
+        'title', 'description', 'lecturers', 'date', 'time', 'location', 'is_past'
     ];
 
-    // Jei turi ryšius (registrations), pridėk čia
-    public function registrations()
-    {
-        return $this->hasMany(Registration::class);
-    }
+    /**
+     * Automatiškai konvertuoja šiuos laukus į Carbon objektus
+     */
+    protected $dates = [
+        'date',          // dabar $conference->date bus Carbon objektas
+        'created_at',
+        'updated_at',
+    ];
+
+    // ALTERNATYVA Laravel 9+ / 10+ / 11+ / 12 versijose – naudok $casts
+    // protected $casts = [
+    //     'date' => 'date',     // arba 'datetime:Y-m-d' jei nori specifinį formatą
+    //     'time' => 'datetime:H:i',
+    // ];
 }
