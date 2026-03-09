@@ -14,11 +14,15 @@ class Conference extends Model
     ];
 
     /**
-     * Automatiškai konvertuoja šiuos laukus į Carbon objektus
+     * Automatiškai konvertuoja laukus į Carbon objektus
+     * (veikia Laravel 8+ / 9+ / 10+ / 11+ / 12)
      */
-    protected $dates = [
-        'date',          // dabar $conference->date bus Carbon objektas
-        'created_at',
-        'updated_at',
+    protected $casts = [
+        'date' => 'date:Y-m-d',     // arba tiesiog 'date' – Laravel pats konvertuos
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
+
+    // ALTERNATYVA senesnėms versijoms (jei $casts neveikia)
+    // protected $dates = ['date', 'created_at', 'updated_at'];
 }
